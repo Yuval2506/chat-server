@@ -5,16 +5,22 @@ import { Chat } from "./chat.model"
 
 @Injectable()
 export class UsersService {
-
-    users: User[] = [];
+    private users: User[] = [];
 
     insertUser(phone: string, password: string, image: string, chats: Chat[]) : string {
         const newUser = new User(phone, password, image, chats);
         this.users.push(newUser);
+        console.log(this.users);
         return "User added successfully";
     }
 
-    getHello(): string {
-        return 'Hello World!';
+    getUsers(): User[] {
+        //return [...this.users];
+        const tempUsers = [];
+        this.users.map((element)=> {
+            tempUsers.push(element);
+        });
+        return tempUsers;
+        return this.users;
     }
 }

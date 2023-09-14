@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Chat } from "./chat.model"
+import { User } from "./user.model"
 
 @Controller('users')
 export class UsersController {
@@ -13,12 +14,14 @@ export class UsersController {
     @Body('image') image: string, 
     @Body('chats') chats: Chat[]
   ): string {
+    console.log(phone, password, image, chats);
     return this.UsersService.insertUser(phone, password, image, chats);
   }
 
 
   @Get()
-  getHello(): string {
-    return this.UsersService.getHello();
+  getAllUsers(): any{
+    console.log(this.UsersService.getUsers());
+    return this.UsersService.getUsers();
   }
 }
