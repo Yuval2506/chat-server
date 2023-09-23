@@ -1,4 +1,4 @@
-import { Chat } from "./chat.model"
+import { Chat } from "../chats/chat.model"
 
 export class User {
     constructor (

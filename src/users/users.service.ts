@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { User } from './user.model'
-import { Chat } from "./chat.model"
+import { Chat } from "../chats/chat.model"
 
 @Injectable()
 export class UsersService {
@@ -21,6 +21,5 @@ export class UsersService {
             tempUsers.push(element);
         });
         return tempUsers;
-        return this.users;
     }
 }
