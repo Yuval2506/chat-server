@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { User } from '../users/user.model'
 import { Chat } from "../chats/chat.model"
@@ -23,5 +23,14 @@ export class ChatsService {
         });
         return tempChats;
         return this.chats;
+    }
+
+    getSingleChat(name:string) : Chat {
+        const foundChat = this.chats.find((searchedChat) => searchedChat.getName() == name);
+        if (!foundChat)
+        {
+            throw new NotFoundException("Could not find chat");
+        }
+        return foundChat; 
     }
 }

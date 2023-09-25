@@ -8,4 +8,8 @@ export class Chat{
         private image:string, 
         private messages: Message[]
     ) {}
+
+    getName() {
+        return this.name;
+    }
 }

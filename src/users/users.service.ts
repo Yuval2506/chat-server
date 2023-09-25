@@ -1,25 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose/dist/common';
 
 import { User } from './user.model'
 import { Chat } from "../chats/chat.model"
+import { Model } from "mongoose";
 
 @Injectable()
 export class UsersService {
-    private users: User[] = [];
 
-    insertUser(phone: string, password: string, image: string, chats: Chat[]) : string {
-        const newUser = new User(phone, password, image, chats);
-        this.users.push(newUser);
-        console.log(this.users);
-        return "User added successfully";
-    }
+    constructor(
+        @InjectModel('User') private readonly UserModel: Model<User>, 
+    ) {}
 
-    getUsers(): User[] {
-        //return [...this.users];
-        const tempUsers = [];
-        this.users.map((element)=> {
-            tempUsers.push(element);
+    async insertUser(phone: string, password: string, image: string, chats: Chat[]) {
+        const newUser = new this.UserModel({
+            phone,
+            password: password,
+            image: image,
+            chats: chats
         });
-        return tempUsers;
+        const result = await newUser.save();
+        return "User "+result.id+" added successfully";
     }
+
+    async getUsers() {
+        const users = await this.UserModel.find().exec();
+        return users as User[];
+    }
+
+    /*getSingleUser(phone:string) : User {
+        //const foundUser = this.users.find((searchedUser) => searchedUser.getPhone() == phone);
+        const foundUser = this.users.find((searchedUser) => searchedUser.phone == phone);
+        console.log(foundUser);
+        if (!foundUser)
+        {
+            throw new NotFoundException("Could not find message");
+        }
+        return foundUser; 
+    }*/
 }

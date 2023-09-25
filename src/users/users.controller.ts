@@ -8,20 +8,31 @@ export class UsersController {
   constructor(private readonly UsersService: UsersService) {}
 
   @Post()
-  addUser(
+  async addUser(
     @Body('phone') phone: string, 
     @Body('password') password: string, 
     @Body('image') image: string, 
     @Body('chats') chats: Chat[]
-  ): string {
+  ) {
     console.log(phone, password, image, chats);
-    return this.UsersService.insertUser(phone, password, image, chats);
+    const generatedId = await this.UsersService.insertUser(
+      phone,
+      password,
+      image,
+      chats);
+    return generatedId as string;
   }
-
 
   @Get()
-  getAllUsers(): any{
-    console.log(this.UsersService.getUsers());
-    return this.UsersService.getUsers();
+  async getAllUsers() {
+    const users = await this.UsersService.getUsers();
+    return users;
   }
+
+  /*@Get(':phone')
+  getUser(@Param('phone') userPhone: string){
+    console.log(this.UsersService.getSingleUser(userPhone));
+    return this.UsersService.getSingleUser(userPhone);
+  }*/
+
 }

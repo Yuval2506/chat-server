@@ -15,13 +15,12 @@ export class MessagesService {
     }
 
     getMessages(): Message[] {
-        //return [...this.users];
+        //return [...this.messages];
         const tempMessages = [];
         this.messages.map((element)=> {
             tempMessages.push(element);
         });
         return tempMessages;
-        return this.messages;
     }
 
     getSingleMessage(message:string) : Message {

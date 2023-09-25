@@ -26,4 +26,11 @@ export class ChatsController {
     console.log(this.ChatsService.getChats());
     return this.ChatsService.getChats();
   }
+
+  @Get(':name')
+  getChat(@Param('name') chatName: string){
+    console.log(this.ChatsService.getSingleChat(chatName));
+    return this.ChatsService.getSingleChat(chatName);
+  }
+  
 }
